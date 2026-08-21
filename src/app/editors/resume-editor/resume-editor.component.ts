@@ -65,7 +65,6 @@ import { PortfolioDataService } from '../../core/services/portfolio-data.service
   styles: [`
     .resume-editor {
       padding: 24px 48px;
-      max-width: 800px;
       overflow-y: auto;
       height: 100%;
     }

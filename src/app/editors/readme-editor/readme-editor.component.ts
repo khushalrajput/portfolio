@@ -109,7 +109,7 @@ import { TabItem } from '../../core/models/portfolio.models';
     }
 
     .editor-content {
-      max-width: 820px;
+      max-width: 960px;
       width: 100%;
     }
 

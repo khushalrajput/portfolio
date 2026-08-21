@@ -59,8 +59,15 @@ import { FileTreeNode, TabItem } from '../../../core/models/portfolio.models';
           background: var(--vsc-bg-hover) !important;
         }
 
-        &.p-tree-node-content-selected {
+        &.p-tree-node-content-selected,
+        &.p-highlight {
           background: var(--vsc-bg-selection) !important;
+          outline: 1px solid rgba(0, 122, 204, 0.5) !important;
+        }
+
+        &.p-tree-node-content-selected .p-tree-node-label,
+        &.p-highlight .p-tree-node-label {
+          color: var(--vsc-text-active) !important;
         }
       }
 
