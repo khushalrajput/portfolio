@@ -50,7 +50,7 @@ interface ActivityBarItem {
           (click)="sidebarService.toggleCopilot()"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18l7 3.5v7.64l-7 3.5-7-3.5V7.68l7-3.5zM12 8a4 4 0 100 8 4 4 0 000-8zm0 2a2 2 0 110 4 2 2 0 010-4z" />
+            <path d="M12 2L9.5 9.5L2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z" />
           </svg>
         </button>
       </div>
