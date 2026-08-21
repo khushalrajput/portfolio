@@ -1,1 +1,93 @@
-/* You can add global styles to this file, and also import other style files */
+@use "tailwindcss";
+
+@layer base {
+  :root {
+    --vsc-bg-editor: #1e1e1e;
+    --vsc-bg-sidebar: #252526;
+    --vsc-bg-activitybar: #333333;
+    --vsc-bg-titlebar: #3c3c3c;
+    --vsc-bg-statusbar: #007acc;
+    --vsc-bg-terminal: #1e1e1e;
+    --vsc-bg-tab-active: #1e1e1e;
+    --vsc-bg-tab-inactive: #2d2d2d;
+    --vsc-bg-tab-border: #252526;
+    --vsc-bg-hover: #2a2d2e;
+    --vsc-bg-selection: #264f78;
+    --vsc-bg-input: #3c3c3c;
+    --vsc-border: #3c3c3c;
+    --vsc-border-tab: #252526;
+    --vsc-text-primary: #d4d4d4;
+    --vsc-text-muted: #858585;
+    --vsc-text-active: #ffffff;
+    --vsc-accent-blue: #569cd6;
+    --vsc-accent-green: #6a9955;
+    --vsc-accent-orange: #ce9178;
+    --vsc-accent-yellow: #dcdcaa;
+    --vsc-accent-purple: #c586c0;
+    --vsc-accent-cyan: #4ec9b0;
+    --vsc-accent-red: #f44747;
+    --vsc-accent-light-blue: #9cdcfe;
+    --vsc-line-number: #858585;
+    --vsc-line-number-active: #c6c6c6;
+    --vsc-scrollbar: rgba(121, 121, 121, 0.4);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--vsc-bg-editor);
+    color: var(--vsc-text-primary);
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--vsc-scrollbar);
+    border-radius: 0;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+@theme {
+  --color-vsc-editor: #1e1e1e;
+  --color-vsc-sidebar: #252526;
+  --color-vsc-activitybar: #333333;
+  --color-vsc-titlebar: #3c3c3c;
+  --color-vsc-statusbar: #007acc;
+  --color-vsc-tab-active: #1e1e1e;
+  --color-vsc-tab-inactive: #2d2d2d;
+  --color-vsc-hover: #2a2d2e;
+  --color-vsc-selection: #264f78;
+  --color-vsc-border: #3c3c3c;
+  --color-vsc-text: #d4d4d4;
+  --color-vsc-text-muted: #858585;
+  --color-vsc-text-active: #ffffff;
+  --color-vsc-accent-blue: #569cd6;
+  --color-vsc-accent-green: #6a9955;
+  --color-vsc-accent-orange: #ce9178;
+  --color-vsc-accent-yellow: #dcdcaa;
+  --color-vsc-accent-purple: #c586c0;
+  --color-vsc-accent-cyan: #4ec9b0;
+}
