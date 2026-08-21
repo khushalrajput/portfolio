@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
 import { SidebarService } from './core/services/sidebar.service';
+import { TabService } from './core/services/tab.service';
 import { TitleBarComponent } from './shell/title-bar/title-bar.component';
 import { MenuBarComponent } from './shell/menu-bar/menu-bar.component';
 import { ActivityBarComponent } from './shell/activity-bar/activity-bar.component';
@@ -26,6 +28,19 @@ import { StatusBarComponent } from './shell/status-bar/status-bar.component';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
-  constructor(protected readonly sidebarService: SidebarService) {}
+export class App implements OnInit {
+  constructor(
+    protected readonly sidebarService: SidebarService,
+    private readonly router: Router,
+    private readonly tabService: TabService,
+  ) {}
+
+  ngOnInit(): void {
+    this.router.events
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe((e) => {
+        const url = (e as NavigationEnd).urlAfterRedirects;
+        this.tabService.activateByRoute(url);
+      });
+  }
 }

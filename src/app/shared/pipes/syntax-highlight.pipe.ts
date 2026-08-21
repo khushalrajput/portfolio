@@ -1,19 +1,26 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
+interface Token {
+  type: 'keyword' | 'string' | 'comment' | 'type' | 'number' | 'decorator' | 'tag' | 'attribute' | 'selector' | 'value' | 'text';
+  value: string;
+}
+
 @Pipe({ name: 'syntaxHighlight' })
 export class SyntaxHighlightPipe implements PipeTransform {
   constructor(private readonly sanitizer: DomSanitizer) {}
 
   transform(code: string, language: string = 'typescript'): SafeHtml {
-    let html = this.escapeHtml(code);
+    let html: string;
 
     if (language === 'typescript' || language === 'ts') {
-      html = this.highlightTypeScript(html);
+      html = this.tokenizeTypeScript(code);
     } else if (language === 'html') {
-      html = this.highlightHtml(html);
+      html = this.tokenizeHtml(code);
     } else if (language === 'scss' || language === 'css') {
-      html = this.highlightScss(html);
+      html = this.tokenizeScss(code);
+    } else {
+      html = this.escapeHtml(code);
     }
 
     return this.sanitizer.bypassSecurityTrustHtml(html);
@@ -23,44 +30,240 @@ export class SyntaxHighlightPipe implements PipeTransform {
     return text
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
 
-  private highlightTypeScript(html: string): string {
-    // Comments
-    html = html.replace(/(\/\/.*$)/gm, '<span class="syn-comment">$1</span>');
-    // Strings
-    html = html.replace(/(&apos;[^&apos;]*&apos;|&#39;[^&#39;]*&#39;|'[^']*'|"[^"]*"|`[^`]*`)/g, '<span class="syn-string">$1</span>');
-    // Keywords
-    const keywords = ['const', 'let', 'var', 'import', 'export', 'from', 'return', 'if', 'else', 'function', 'class', 'interface', 'type', 'extends', 'implements', 'new', 'this', 'async', 'await', 'readonly', 'private', 'protected', 'public'];
-    for (const kw of keywords) {
-      html = html.replace(new RegExp(`\\b(${kw})\\b`, 'g'), '<span class="syn-keyword">$1</span>');
+  private wrapSpan(cls: string, text: string): string {
+    return `<span class="${cls}">${this.escapeHtml(text)}</span>`;
+  }
+
+  private tokenizeTypeScript(code: string): string {
+    const keywords = new Set(['const', 'let', 'var', 'import', 'export', 'from', 'return', 'if', 'else', 'function', 'class', 'interface', 'type', 'extends', 'implements', 'new', 'this', 'async', 'await', 'readonly', 'private', 'protected', 'public', 'default']);
+    const types = new Set(['string', 'number', 'boolean', 'void', 'null', 'undefined', 'any', 'never', 'unknown']);
+
+    const result: string[] = [];
+    let i = 0;
+
+    while (i < code.length) {
+      // Single-line comment
+      if (code[i] === '/' && code[i + 1] === '/') {
+        const end = code.indexOf('\n', i);
+        const commentEnd = end === -1 ? code.length : end;
+        result.push(this.wrapSpan('syn-comment', code.slice(i, commentEnd)));
+        i = commentEnd;
+        continue;
+      }
+
+      // Decorator
+      if (code[i] === '@' && /[a-zA-Z]/.test(code[i + 1] || '')) {
+        let j = i + 1;
+        while (j < code.length && /\w/.test(code[j])) j++;
+        result.push(this.wrapSpan('syn-decorator', code.slice(i, j)));
+        i = j;
+        continue;
+      }
+
+      // String (single quote)
+      if (code[i] === "'") {
+        let j = i + 1;
+        while (j < code.length && code[j] !== "'" && code[j] !== '\n') {
+          if (code[j] === '\\') j++;
+          j++;
+        }
+        if (j < code.length) j++;
+        result.push(this.wrapSpan('syn-string', code.slice(i, j)));
+        i = j;
+        continue;
+      }
+
+      // String (double quote)
+      if (code[i] === '"') {
+        let j = i + 1;
+        while (j < code.length && code[j] !== '"' && code[j] !== '\n') {
+          if (code[j] === '\\') j++;
+          j++;
+        }
+        if (j < code.length) j++;
+        result.push(this.wrapSpan('syn-string', code.slice(i, j)));
+        i = j;
+        continue;
+      }
+
+      // Template literal
+      if (code[i] === '`') {
+        let j = i + 1;
+        while (j < code.length && code[j] !== '`') {
+          if (code[j] === '\\') j++;
+          j++;
+        }
+        if (j < code.length) j++;
+        result.push(this.wrapSpan('syn-string', code.slice(i, j)));
+        i = j;
+        continue;
+      }
+
+      // Number
+      if (/\d/.test(code[i]) && (i === 0 || !/\w/.test(code[i - 1]))) {
+        let j = i;
+        while (j < code.length && /[\d.]/.test(code[j])) j++;
+        result.push(this.wrapSpan('syn-number', code.slice(i, j)));
+        i = j;
+        continue;
+      }
+
+      // Word (keyword, type, or identifier)
+      if (/[a-zA-Z_$]/.test(code[i])) {
+        let j = i;
+        while (j < code.length && /\w/.test(code[j])) j++;
+        const word = code.slice(i, j);
+        if (keywords.has(word)) {
+          result.push(this.wrapSpan('syn-keyword', word));
+        } else if (types.has(word)) {
+          result.push(this.wrapSpan('syn-type', word));
+        } else {
+          result.push(this.escapeHtml(word));
+        }
+        i = j;
+        continue;
+      }
+
+      // Other character
+      result.push(this.escapeHtml(code[i]));
+      i++;
     }
-    // Types
-    const types = ['string', 'number', 'boolean', 'void', 'null', 'undefined', 'any', 'never', 'unknown'];
-    for (const t of types) {
-      html = html.replace(new RegExp(`\\b(${t})\\b`, 'g'), '<span class="syn-type">$1</span>');
+
+    return result.join('');
+  }
+
+  private tokenizeHtml(code: string): string {
+    const result: string[] = [];
+    let i = 0;
+
+    while (i < code.length) {
+      // Comment
+      if (code.startsWith('<!--', i)) {
+        const end = code.indexOf('-->', i);
+        const commentEnd = end === -1 ? code.length : end + 3;
+        result.push(this.wrapSpan('syn-comment', code.slice(i, commentEnd)));
+        i = commentEnd;
+        continue;
+      }
+
+      // Tag
+      if (code[i] === '<') {
+        let j = i + 1;
+        const isClosing = code[j] === '/';
+        if (isClosing) j++;
+
+        // Tag name
+        let tagStart = j;
+        while (j < code.length && /[\w-]/.test(code[j])) j++;
+        const tagName = code.slice(tagStart, j);
+
+        result.push(this.escapeHtml(code.slice(i, tagStart)));
+        if (tagName) {
+          result.push(this.wrapSpan('syn-tag', tagName));
+        }
+
+        // Attributes until >
+        while (j < code.length && code[j] !== '>') {
+          if (/[a-zA-Z[\]]/.test(code[j])) {
+            let attrStart = j;
+            while (j < code.length && code[j] !== '=' && code[j] !== '>' && code[j] !== ' ' && code[j] !== '\n') j++;
+            result.push(this.wrapSpan('syn-attribute', code.slice(attrStart, j)));
+          } else if (code[j] === '"') {
+            let strStart = j;
+            j++;
+            while (j < code.length && code[j] !== '"') j++;
+            if (j < code.length) j++;
+            result.push(this.wrapSpan('syn-string', code.slice(strStart, j)));
+          } else {
+            result.push(this.escapeHtml(code[j]));
+            j++;
+          }
+        }
+
+        if (j < code.length) {
+          result.push(this.escapeHtml(code[j]));
+          j++;
+        }
+        i = j;
+        continue;
+      }
+
+      result.push(this.escapeHtml(code[i]));
+      i++;
     }
-    // Decorators
-    html = html.replace(/(@\w+)/g, '<span class="syn-decorator">$1</span>');
-    // Numbers
-    html = html.replace(/\b(\d+\.?\d*)\b/g, '<span class="syn-number">$1</span>');
-    return html;
+
+    return result.join('');
   }
 
-  private highlightHtml(html: string): string {
-    html = html.replace(/(&lt;\/?)([\w-]+)/g, '$1<span class="syn-tag">$2</span>');
-    html = html.replace(/([\w-]+)(=)/g, '<span class="syn-attribute">$1</span>$2');
-    html = html.replace(/(".*?")/g, '<span class="syn-string">$1</span>');
-    return html;
-  }
+  private tokenizeScss(code: string): string {
+    const result: string[] = [];
+    let i = 0;
 
-  private highlightScss(html: string): string {
-    html = html.replace(/(\/\/.*$)/gm, '<span class="syn-comment">$1</span>');
-    html = html.replace(/(\.[a-zA-Z][\w-]*)/g, '<span class="syn-selector">$1</span>');
-    html = html.replace(/(#[a-fA-F0-9]{3,8})\b/g, '<span class="syn-number">$1</span>');
-    html = html.replace(/(@\w+)/g, '<span class="syn-keyword">$1</span>');
-    html = html.replace(/(:\s*)([^;{}\n]+)(;)/g, '$1<span class="syn-value">$2</span>$3');
-    return html;
+    while (i < code.length) {
+      // Comment
+      if (code[i] === '/' && code[i + 1] === '/') {
+        const end = code.indexOf('\n', i);
+        const commentEnd = end === -1 ? code.length : end;
+        result.push(this.wrapSpan('syn-comment', code.slice(i, commentEnd)));
+        i = commentEnd;
+        continue;
+      }
+
+      // @ rule
+      if (code[i] === '@' && /[a-zA-Z]/.test(code[i + 1] || '')) {
+        let j = i + 1;
+        while (j < code.length && /\w/.test(code[j])) j++;
+        result.push(this.wrapSpan('syn-keyword', code.slice(i, j)));
+        i = j;
+        continue;
+      }
+
+      // Class selector
+      if (code[i] === '.' && /[a-zA-Z]/.test(code[i + 1] || '') && (i === 0 || /[\s{;,}]/.test(code[i - 1]))) {
+        let j = i + 1;
+        while (j < code.length && /[\w-]/.test(code[j])) j++;
+        result.push(this.wrapSpan('syn-selector', code.slice(i, j)));
+        i = j;
+        continue;
+      }
+
+      // Hex color
+      if (code[i] === '#' && /[a-fA-F0-9]/.test(code[i + 1] || '')) {
+        let j = i + 1;
+        while (j < code.length && /[a-fA-F0-9]/.test(code[j])) j++;
+        result.push(this.wrapSpan('syn-number', code.slice(i, j)));
+        i = j;
+        continue;
+      }
+
+      // String
+      if (code[i] === "'" || code[i] === '"') {
+        const quote = code[i];
+        let j = i + 1;
+        while (j < code.length && code[j] !== quote && code[j] !== '\n') j++;
+        if (j < code.length) j++;
+        result.push(this.wrapSpan('syn-string', code.slice(i, j)));
+        i = j;
+        continue;
+      }
+
+      // Number
+      if (/\d/.test(code[i]) && (i === 0 || !/\w/.test(code[i - 1]))) {
+        let j = i;
+        while (j < code.length && /[\d.%pxemremvhvw]/.test(code[j])) j++;
+        result.push(this.wrapSpan('syn-number', code.slice(i, j)));
+        i = j;
+        continue;
+      }
+
+      result.push(this.escapeHtml(code[i]));
+      i++;
+    }
+
+    return result.join('');
   }
 }

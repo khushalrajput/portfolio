@@ -69,6 +69,76 @@ import { FileTreeNode, TabItem } from '../../../core/models/portfolio.models';
         width: 16px !important;
         height: 16px !important;
       }
+
+      /* Hide the generic pi-file icon for file nodes that have a custom ext class */
+      .file-ext-ts,
+      .file-ext-html,
+      .file-ext-scss,
+      .file-ext-json,
+      .file-ext-md,
+      .file-ext-pdf,
+      .file-ext-git-timeline {
+        .p-tree-node-icon {
+          font-size: 0 !important;
+          width: 20px !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+
+          &::before {
+            font-family: 'Cascadia Code', monospace !important;
+            font-weight: 700 !important;
+            font-size: 9px !important;
+            line-height: 1 !important;
+            border-radius: 2px !important;
+            padding: 1px 2px !important;
+            letter-spacing: -0.5px !important;
+          }
+        }
+      }
+
+      .file-ext-ts .p-tree-node-icon::before {
+        content: 'TS' !important;
+        color: #3178c6 !important;
+        border: 1px solid #3178c6 !important;
+      }
+
+      .file-ext-html .p-tree-node-icon::before {
+        content: '<>' !important;
+        color: #e34c26 !important;
+        border: 1px solid #e34c26 !important;
+      }
+
+      .file-ext-scss .p-tree-node-icon::before {
+        content: 'S' !important;
+        color: #cd6799 !important;
+        border: 1px solid #cd6799 !important;
+      }
+
+      .file-ext-json .p-tree-node-icon::before {
+        content: '{}' !important;
+        color: #cbcb41 !important;
+        border: 1px solid #cbcb41 !important;
+      }
+
+      .file-ext-md .p-tree-node-icon::before {
+        content: 'M↓' !important;
+        color: #519aba !important;
+        border: 1px solid #519aba !important;
+      }
+
+      .file-ext-pdf .p-tree-node-icon::before {
+        content: 'PDF' !important;
+        color: #e44d26 !important;
+        border: 1px solid #e44d26 !important;
+        font-size: 7px !important;
+      }
+
+      .file-ext-git-timeline .p-tree-node-icon::before {
+        content: '⎇' !important;
+        color: #f05032 !important;
+        border: 1px solid #f05032 !important;
+      }
     }
   `],
 })
@@ -103,9 +173,10 @@ export class ExplorerPanelComponent implements OnInit {
   private mapToTreeNodes(nodes: FileTreeNode[]): TreeNode[] {
     return nodes.map((node) => ({
       label: node.label,
-      icon: node.type === 'folder' ? 'pi pi-folder' : this.getFileIcon(node.fileExtension),
+      icon: node.type === 'folder' ? 'pi pi-folder' : 'pi pi-file',
       expandedIcon: node.type === 'folder' ? 'pi pi-folder-open' : undefined,
       collapsedIcon: node.type === 'folder' ? 'pi pi-folder' : undefined,
+      styleClass: node.type === 'file' ? this.getFileStyleClass(node.fileExtension) : undefined,
       children: node.children ? this.mapToTreeNodes(node.children) : undefined,
       leaf: node.type === 'file',
       expanded: node.label === 'PORTFOLIO' || node.label === 'src',
@@ -118,16 +189,17 @@ export class ExplorerPanelComponent implements OnInit {
     }));
   }
 
-  private getFileIcon(ext?: string): string {
-    const iconMap: Record<string, string> = {
-      ts: 'pi pi-file',
-      html: 'pi pi-file',
-      scss: 'pi pi-file',
-      json: 'pi pi-file',
-      md: 'pi pi-file',
-      pdf: 'pi pi-file',
+  private getFileStyleClass(ext?: string): string {
+    const classMap: Record<string, string> = {
+      ts: 'file-ext-ts',
+      html: 'file-ext-html',
+      scss: 'file-ext-scss',
+      json: 'file-ext-json',
+      md: 'file-ext-md',
+      pdf: 'file-ext-pdf',
+      'git-timeline': 'file-ext-git-timeline',
     };
-    return iconMap[ext ?? ''] ?? 'pi pi-file';
+    return classMap[ext ?? ''] ?? 'file-ext-default';
   }
 
   private buildBreadcrumb(node: TreeNode): string[] {

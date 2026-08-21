@@ -42,3 +42,17 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Claude Code / AI assistant
+.claude/
+PLAN.md
+PLANS/
+RESEARCH.md
+REVIEW.md
+ROADMAP.md
+PROJECT.md
+MEMORY.md
+brainstorm*.md
+*.brainstorm
+.superpower*/
+docs/*
