@@ -48,6 +48,11 @@ interface ActivityBarItem {
     </div>
   `,
   styles: [`
+    :host {
+      display: flex;
+      height: 100%;
+    }
+
     .activity-bar {
       display: flex;
       flex-direction: column;
