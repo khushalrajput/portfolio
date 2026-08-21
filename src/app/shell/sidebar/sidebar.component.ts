@@ -32,10 +32,16 @@ import { CopilotChatPanelComponent } from './copilot-chat-panel/copilot-chat-pan
     </div>
   `,
   styles: [`
+    :host {
+      display: flex;
+      height: 100%;
+    }
+
     .sidebar {
       width: 260px;
       min-width: 200px;
       max-width: 400px;
+      height: 100%;
       background-color: var(--vsc-bg-sidebar);
       border-right: 1px solid var(--vsc-border);
       overflow: hidden;
