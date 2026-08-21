@@ -1,0 +1,34 @@
+{
+  "name": "Khushal Singh Rajput",
+  "role": "Software Engineer",
+  "company": "Bacancy",
+  "location": "Ahmedabad, India",
+  "email": "rajputkhushal31@gmail.com",
+  "tagline": "Full Stack Developer · Angular · .NET Core",
+  "intro": "Software Engineer at Bacancy delivering enterprise production systems across pharma, govtech, and real estate using Angular and ASP.NET Core. Passionate about clean architecture, AI integration, and building tools that solve real problems.",
+  "links": {
+    "github": "https://github.com/khushalrajput",
+    "linkedin": "https://linkedin.com/in/khushalsinghrajput"
+  },
+  "education": [
+    {
+      "degree": "B.E., Information Technology",
+      "institution": "Vishwakarma Government Engineering College",
+      "cgpa": "8.96",
+      "years": "2021 – 2024"
+    },
+    {
+      "degree": "Diploma, Information Technology",
+      "institution": "R.C. Technical Institute",
+      "cgpa": "9.83",
+      "years": "2018 – 2021"
+    }
+  ],
+  "certifications": ["Azure Fundamentals: AZ-900 Exam Prep — Udemy (2026)"],
+  "recognition": [
+    { "title": "Fast-Track Innovator", "period": "Q3 2025" },
+    { "title": "Excellence Award", "period": "2024–2025" },
+    { "title": "Extra Mile Award", "period": "2024–2025" },
+    { "title": "Marvellous Performance Award", "period": "2024–2025" }
+  ]
+}

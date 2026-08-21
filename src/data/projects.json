@@ -1,0 +1,33 @@
+[
+  {
+    "name": "Invoice Automation System",
+    "domain": "Pharma",
+    "stack": ["Angular 19", ".NET 9", "Azure AI Document Intelligence", "Power Automate", "SQL Server", "PrimeNG"],
+    "description": "AI-powered platform ingesting vendor invoices (FTP/SFTP/OneDrive) through an Azure OCR pipeline to auto-extract structured data across multi-country operations.",
+    "highlights": [
+      "Built self-learning correction loop — field errors captured as per-country trim patterns and auto-applied to future invoices",
+      "Reduced manual data entry by ~40% across multi-country pharmaceutical operations"
+    ]
+  },
+  {
+    "name": "Registry Management System",
+    "domain": "GovTech",
+    "stack": ["Angular 18", ".NET 8", "SQL Server", "EntityLite ORM", "SonarQube", "Azure", "PrimeNG"],
+    "description": "Legal operations platform for Spanish agencies and notaries — property registration, inheritance procedures, and financial simulations driven by configurable workflow engines.",
+    "highlights": [
+      "Optimized client-side state and API call patterns, reducing redundant network requests",
+      "Measurably improved page-load responsiveness"
+    ]
+  },
+  {
+    "name": "CareerLens",
+    "domain": "Personal Project",
+    "stack": ["Angular 21", ".NET 10", "LLamaSharp (Qwen3-4B)", "SQLite", "EF Core", "SignalR", "MediatR", "FluentValidation"],
+    "description": "Privacy-first AI resume tool scoring resumes against job descriptions and surfacing skill gaps — runs 100% locally via in-process LLM inference, zero cloud calls.",
+    "highlights": [
+      "Built on Clean Architecture with CQRS, Minimal APIs, and real-time SignalR progress streaming",
+      "Angular 21 zoneless / signals frontend"
+    ],
+    "link": "https://github.com/khushalrajput"
+  }
+]

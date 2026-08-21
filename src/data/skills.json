@@ -1,0 +1,28 @@
+{
+  "radarLabels": ["Angular", ".NET Core", "TypeScript", "RxJS", "SQL", "C#", "Azure", "Clean Arch"],
+  "radarValues": [95, 85, 92, 80, 78, 83, 65, 82],
+  "allSkills": [
+    { "name": "Angular 16–21", "proficiency": 95, "category": "frontend" },
+    { "name": "TypeScript", "proficiency": 92, "category": "frontend" },
+    { "name": "RxJS", "proficiency": 80, "category": "frontend" },
+    { "name": "Angular Signals", "proficiency": 85, "category": "frontend" },
+    { "name": "PrimeNG", "proficiency": 88, "category": "frontend" },
+    { "name": "TailwindCSS", "proficiency": 82, "category": "frontend" },
+    { "name": "HTML5/CSS3/SCSS", "proficiency": 90, "category": "frontend" },
+    { "name": "C#", "proficiency": 83, "category": "backend" },
+    { "name": ".NET 8/9/10", "proficiency": 85, "category": "backend" },
+    { "name": "ASP.NET Core Web API", "proficiency": 85, "category": "backend" },
+    { "name": "Entity Framework Core", "proficiency": 80, "category": "backend" },
+    { "name": "SignalR", "proficiency": 72, "category": "backend" },
+    { "name": "MediatR / CQRS", "proficiency": 78, "category": "backend" },
+    { "name": "SQL Server", "proficiency": 78, "category": "database" },
+    { "name": "PostgreSQL", "proficiency": 68, "category": "database" },
+    { "name": "Clean Architecture", "proficiency": 82, "category": "architecture" },
+    { "name": "REST APIs", "proficiency": 90, "category": "architecture" },
+    { "name": "Microservices", "proficiency": 70, "category": "architecture" },
+    { "name": "Azure", "proficiency": 65, "category": "devops" },
+    { "name": "GitHub Actions", "proficiency": 60, "category": "devops" },
+    { "name": "SonarQube", "proficiency": 75, "category": "devops" },
+    { "name": "LLamaSharp (Local LLM)", "proficiency": 65, "category": "ai" }
+  ]
+}

@@ -1,0 +1,84 @@
+[
+  {
+    "id": "bacancy",
+    "role": "Software Engineer",
+    "organization": "Bacancy",
+    "period": "Jan 2024 – Present",
+    "isCurrent": true,
+    "commits": [
+      {
+        "hash": "a1b2c3d",
+        "type": "feat",
+        "message": "Invoice Automation System (Pharma)",
+        "description": "AI-powered invoice extraction pipeline with self-learning correction loop. Azure OCR + .NET 9 backend + Angular 19 frontend.",
+        "techStack": ["Angular 19", ".NET 9", "Azure AI", "PrimeNG"],
+        "impact": "~40% reduction in manual data entry"
+      },
+      {
+        "hash": "e4f5g6h",
+        "type": "feat",
+        "message": "Registry Management System (GovTech)",
+        "description": "Legal operations platform for Spanish agencies — property registration, inheritance procedures, configurable workflow engines.",
+        "techStack": ["Angular 18", ".NET 8", "SQL Server", "PrimeNG"],
+        "impact": "Improved page-load responsiveness"
+      },
+      {
+        "hash": "i7j8k9l",
+        "type": "fix",
+        "message": "SonarQube C→A rating, 30+ vulns resolved",
+        "description": "Drove code quality initiative resolving 30+ vulnerabilities and code smells across the codebase.",
+        "techStack": ["SonarQube", "Angular", ".NET"],
+        "impact": "Project rating raised from C to A"
+      },
+      {
+        "hash": "m0n1o2p",
+        "type": "refactor",
+        "message": "Angular 14→18, .NET Core 6→8 migration",
+        "description": "Led migration across 12+ modules with zero downtime, removing deprecated APIs and improving build performance.",
+        "techStack": ["Angular 18", ".NET 8"],
+        "impact": "12+ modules migrated, zero downtime"
+      },
+      {
+        "hash": "q3r4s5t",
+        "type": "feat",
+        "message": "RBAC with org hierarchies",
+        "description": "Engineered fine-grained RBAC with user-position-organization hierarchies, feature-level permissions, and audit logging.",
+        "techStack": ["Angular", ".NET", "SQL Server"],
+        "impact": "Enterprise compliance achieved"
+      }
+    ],
+    "tags": [
+      { "name": "v2.0-award", "label": "Fast-Track Innovator Q3 2025" },
+      { "name": "v1.2-award", "label": "Excellence Award 2024" },
+      { "name": "v1.1-award", "label": "Extra Mile Award 2024" },
+      { "name": "v1.0-award", "label": "Marvellous Performance 2024" }
+    ]
+  },
+  {
+    "id": "vgec",
+    "role": "B.E., Information Technology (8.96 CGPA)",
+    "organization": "Vishwakarma Government Engineering College",
+    "period": "2021 – 2024",
+    "isCurrent": false,
+    "commits": [
+      {
+        "hash": "u6v7w8x",
+        "type": "feat",
+        "message": "CareerLens (Personal Project)",
+        "description": "Privacy-first AI resume tool with local LLM inference. Clean Architecture, CQRS, SignalR streaming, Angular 21 zoneless frontend.",
+        "techStack": ["Angular 21", ".NET 10", "LLamaSharp", "SignalR"],
+        "impact": "100% local inference, zero cloud calls"
+      }
+    ],
+    "tags": []
+  },
+  {
+    "id": "rcti",
+    "role": "Diploma, Information Technology (9.83 CGPA)",
+    "organization": "R.C. Technical Institute",
+    "period": "2018 – 2021",
+    "isCurrent": false,
+    "commits": [],
+    "tags": []
+  }
+]

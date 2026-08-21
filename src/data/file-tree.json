@@ -1,0 +1,102 @@
+[
+  {
+    "label": "PORTFOLIO",
+    "type": "folder",
+    "icon": "folder",
+    "expandedIcon": "folder-open",
+    "children": [
+      {
+        "label": "src",
+        "type": "folder",
+        "icon": "folder",
+        "expandedIcon": "folder-open",
+        "children": [
+          {
+            "label": "app",
+            "type": "folder",
+            "icon": "folder",
+            "expandedIcon": "folder-open",
+            "children": [
+              {
+                "label": "portfolio",
+                "type": "folder",
+                "icon": "folder",
+                "expandedIcon": "folder-open",
+                "children": [
+                  {
+                    "label": "about-me.component.ts",
+                    "type": "file",
+                    "icon": "typescript",
+                    "fileExtension": "ts",
+                    "route": "/about"
+                  },
+                  {
+                    "label": "projects.component.html",
+                    "type": "file",
+                    "icon": "html",
+                    "fileExtension": "html",
+                    "route": "/projects"
+                  },
+                  {
+                    "label": "skill-radar.ts",
+                    "type": "file",
+                    "icon": "typescript",
+                    "fileExtension": "ts",
+                    "route": "/skills"
+                  }
+                ]
+              },
+              {
+                "label": "app.config.ts",
+                "type": "file",
+                "icon": "typescript",
+                "fileExtension": "ts"
+              }
+            ]
+          },
+          {
+            "label": "styles.scss",
+            "type": "file",
+            "icon": "scss",
+            "fileExtension": "scss",
+            "route": "/styles"
+          }
+        ]
+      },
+      {
+        "label": ".github",
+        "type": "folder",
+        "icon": "folder",
+        "expandedIcon": "folder-open",
+        "children": [
+          {
+            "label": "experience.git-timeline",
+            "type": "file",
+            "icon": "git",
+            "fileExtension": "git-timeline"
+          }
+        ]
+      },
+      {
+        "label": "angular.json",
+        "type": "file",
+        "icon": "json",
+        "fileExtension": "json"
+      },
+      {
+        "label": "readme.md",
+        "type": "file",
+        "icon": "markdown",
+        "fileExtension": "md",
+        "route": "/readme"
+      },
+      {
+        "label": "resume.pdf",
+        "type": "file",
+        "icon": "pdf",
+        "fileExtension": "pdf",
+        "route": "/resume"
+      }
+    ]
+  }
+]
