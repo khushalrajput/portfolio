@@ -30,3 +30,42 @@
   overflow: auto;
   background-color: var(--vsc-bg-editor);
 }
+
+// Mobile breakpoints
+@media (max-width: 768px) {
+  .vscode-main {
+    flex-direction: column;
+    position: relative;
+  }
+
+  app-activity-bar {
+    order: 2;
+  }
+
+  app-sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  app-menu-bar {
+    display: none;
+  }
+
+  .vscode-editor-content {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 1023px) {
+  app-sidebar {
+    position: absolute;
+    z-index: 50;
+    height: 100%;
+  }
+}

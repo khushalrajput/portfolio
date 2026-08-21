@@ -104,6 +104,32 @@ interface ActivityBarItem {
       align-items: center;
       justify-content: center;
     }
+
+    @media (max-width: 768px) {
+      .activity-bar {
+        flex-direction: row;
+        width: 100%;
+        min-width: unset;
+        height: 48px;
+        border-right: none;
+        border-top: 1px solid var(--vsc-border);
+      }
+
+      .activity-bar-top,
+      .activity-bar-bottom {
+        flex-direction: row;
+      }
+
+      .activity-icon {
+        border-left: none;
+        border-top: 2px solid transparent;
+
+        &.active {
+          border-left-color: transparent;
+          border-top-color: var(--vsc-text-active);
+        }
+      }
+    }
   `],
 })
 export class ActivityBarComponent {
