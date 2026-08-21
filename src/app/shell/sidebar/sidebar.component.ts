@@ -3,7 +3,6 @@ import { SidebarService } from '../../core/services/sidebar.service';
 import { ExplorerPanelComponent } from './explorer-panel/explorer-panel.component';
 import { GitTimelinePanelComponent } from './git-timeline-panel/git-timeline-panel.component';
 import { SkillsPanelComponent } from './skills-panel/skills-panel.component';
-import { CopilotChatPanelComponent } from './copilot-chat-panel/copilot-chat-panel.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,7 +10,6 @@ import { CopilotChatPanelComponent } from './copilot-chat-panel/copilot-chat-pan
     ExplorerPanelComponent,
     GitTimelinePanelComponent,
     SkillsPanelComponent,
-    CopilotChatPanelComponent,
   ],
   template: `
     <div class="sidebar">
@@ -24,9 +22,6 @@ import { CopilotChatPanelComponent } from './copilot-chat-panel/copilot-chat-pan
         }
         @case ('skills') {
           <app-skills-panel />
-        }
-        @case ('copilot') {
-          <app-copilot-chat-panel />
         }
       }
     </div>

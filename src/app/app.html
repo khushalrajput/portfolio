@@ -31,6 +31,11 @@
       <!-- Terminal Pane -->
       <app-terminal-pane />
     </div>
+
+    <!-- Copilot Right Panel -->
+    @if (sidebarService.copilotOpen()) {
+      <app-copilot-chat-panel />
+    }
   </div>
 
   <!-- Status Bar -->

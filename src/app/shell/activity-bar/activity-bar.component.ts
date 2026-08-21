@@ -31,19 +31,28 @@ interface ActivityBarItem {
         }
       </div>
       <div class="activity-bar-bottom">
-        @for (item of bottomItems; track item.panel) {
-          <button
-            class="activity-icon"
-            [class.active]="sidebarService.activePanel() === item.panel"
-            [attr.aria-label]="item.label"
-            [title]="item.label"
-            (click)="sidebarService.togglePanel(item.panel)"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path [attr.d]="item.svgPath" />
-            </svg>
-          </button>
-        }
+        <button
+          class="activity-icon"
+          [class.active]="sidebarService.activePanel() === 'skills'"
+          aria-label="Skills Overview"
+          title="Skills Overview"
+          (click)="sidebarService.togglePanel('skills')"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+          </svg>
+        </button>
+        <button
+          class="activity-icon"
+          [class.active]="sidebarService.copilotOpen()"
+          aria-label="Copilot Chat"
+          title="Copilot Chat"
+          (click)="sidebarService.toggleCopilot()"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18l7 3.5v7.64l-7 3.5-7-3.5V7.68l7-3.5zM12 8a4 4 0 100 8 4 4 0 000-8zm0 2a2 2 0 110 4 2 2 0 010-4z" />
+          </svg>
+        </button>
       </div>
     </div>
   `,
@@ -154,16 +163,5 @@ export class ActivityBarComponent {
     },
   ];
 
-  readonly bottomItems: ActivityBarItem[] = [
-    {
-      panel: 'skills',
-      label: 'Skills Overview',
-      svgPath: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z',
-    },
-    {
-      panel: 'copilot',
-      label: 'Copilot Chat',
-      svgPath: 'M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18l7 3.5v7.64l-7 3.5-7-3.5V7.68l7-3.5zM12 8a4 4 0 100 8 4 4 0 000-8zm0 2a2 2 0 110 4 2 2 0 010-4z',
-    },
-  ];
+  // Bottom items are now hardcoded in template (skills + copilot with separate toggle)
 }
