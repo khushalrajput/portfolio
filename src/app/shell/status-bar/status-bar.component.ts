@@ -7,27 +7,38 @@ import { PortfolioDataService } from '../../core/services/portfolio-data.service
     <div class="status-bar">
       <div class="status-left">
         <a class="status-item branch" [href]="data.profile.links.github" target="_blank" rel="noopener">
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5z"/>
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M14.5 2H9.71l-.85-.85L8.5.79h-3l-.36.36L4.29 2H1.5l-.5.5v10l.5.5h13l.5-.5v-10l-.5-.5zm-.5 10H2V3h2.29l.85.85.36.15h3l.35-.15.86-.85H14v9z"/>
           </svg>
-          master*
+          main*
         </a>
-        <span class="status-item">
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M8 4a4 4 0 100 8 4 4 0 000-8z"/>
+        <span class="status-item sync">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M2.5 2h11l.5.5v11l-.5.5h-11l-.5-.5v-11l.5-.5zM3 13h10V3H3v10z"/>
           </svg>
-          0↓ 0↑
+          ↑0 ↓321
         </span>
-        <span class="status-item">⊘ 0</span>
-        <span class="status-item warning">⚠ 1</span>
+      </div>
+      <div class="status-center">
+        <span class="status-item errors">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 1a7 7 0 110 14A7 7 0 018 1zm0 1a6 6 0 100 12A6 6 0 008 2zm-.7 8.5h1.4v1.4H7.3V10.5zm0-6.4h1.4v5h-1.4v-5z"/>
+          </svg>
+          0
+        </span>
+        <span class="status-item warnings">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M7.56 1h.88l6.94 12.81-.44.75H1.06l-.44-.75L7.56 1zm.44 2.12L2.47 13h11.06L8 3.12zM7.25 11h1.5v1.5h-1.5V11zm0-5h1.5v4h-1.5V6z"/>
+          </svg>
+          1
+        </span>
       </div>
       <div class="status-right">
         <span class="status-item">Ln 12, Col 40</span>
         <span class="status-item">Spaces: 2</span>
         <span class="status-item">UTF-8</span>
         <span class="status-item">LF</span>
-        <span class="status-item">Angular v21</span>
-        <span class="status-item">.NET 10</span>
+        <span class="status-item">{{ '{' }}{{ '}' }} TypeScript Angular</span>
         <button
           class="status-item bell"
           [class.pulsing]="showNotification()"
@@ -57,11 +68,12 @@ import { PortfolioDataService } from '../../core/services/portfolio-data.service
       background-color: var(--vsc-bg-statusbar);
       color: white;
       font-size: 12px;
-      padding: 0 8px;
+      padding: 0 4px;
       user-select: none;
     }
 
     .status-left,
+    .status-center,
     .status-right {
       display: flex;
       align-items: center;
@@ -72,13 +84,14 @@ import { PortfolioDataService } from '../../core/services/portfolio-data.service
       display: flex;
       align-items: center;
       gap: 3px;
-      padding: 0 6px;
+      padding: 0 5px;
       height: 22px;
       color: white;
       text-decoration: none;
       font-size: 11px;
       white-space: nowrap;
       cursor: default;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 
       svg {
         opacity: 0.9;
@@ -91,12 +104,12 @@ import { PortfolioDataService } from '../../core/services/portfolio-data.service
       cursor: pointer;
     }
 
-    .warning {
+    .warnings {
       color: #ffd700;
     }
 
     .branch {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
       cursor: pointer;
     }
 

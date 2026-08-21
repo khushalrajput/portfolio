@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <div class="menu-bar">
       @for (item of menuItems; track item) {
-        <button class="menu-item">{{ item }}</button>
+        <button class="menu-item" [class.copilot-item]="item === 'Copilot'">{{ item }}</button>
       }
     </div>
   `,
@@ -35,8 +35,12 @@ import { Component } from '@angular/core';
         color: var(--vsc-text-primary);
       }
     }
+
+    .copilot-item {
+      margin-left: auto;
+    }
   `],
 })
 export class MenuBarComponent {
-  readonly menuItems = ['File', 'Edit', 'Selection', 'View', 'Go', 'Run', 'Terminal', 'Help'];
+  readonly menuItems = ['File', 'Edit', 'Selection', 'View', 'Go', 'Run', 'Terminal', 'Help', 'Copilot'];
 }

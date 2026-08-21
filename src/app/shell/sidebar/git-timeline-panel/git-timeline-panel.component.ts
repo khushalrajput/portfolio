@@ -6,7 +6,7 @@ import { ExperienceCommit, ExperienceEntry } from '../../../core/models/portfoli
   selector: 'app-git-timeline-panel',
   template: `
     <div class="git-panel">
-      <div class="panel-header">SOURCE CONTROL</div>
+      <div class="panel-header">Source Control</div>
 
       <!-- Filter chips -->
       <div class="filter-chips">

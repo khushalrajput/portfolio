@@ -10,7 +10,10 @@ import { FileTreeNode, TabItem } from '../../../core/models/portfolio.models';
   imports: [Tree],
   template: `
     <div class="explorer-panel">
-      <div class="panel-header">EXPLORER</div>
+      <div class="panel-header">
+        <span>Explorer</span>
+        <button class="header-actions" aria-label="More Actions">···</button>
+      </div>
       <p-tree
         [value]="treeNodes"
         selectionMode="single"
@@ -28,12 +31,35 @@ import { FileTreeNode, TabItem } from '../../../core/models/portfolio.models';
     }
 
     .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 8px 16px;
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--vsc-text-muted);
+    }
+
+    .header-actions {
+      background: transparent;
+      border: none;
+      color: var(--vsc-text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      letter-spacing: 2px;
+      opacity: 0;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    .panel-header:hover .header-actions {
+      opacity: 1;
     }
 
     :host ::ng-deep {

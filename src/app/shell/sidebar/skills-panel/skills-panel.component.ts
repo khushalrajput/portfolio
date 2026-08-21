@@ -7,7 +7,7 @@ import { PortfolioDataService } from '../../../core/services/portfolio-data.serv
   imports: [ChartModule],
   template: `
     <div class="skills-panel">
-      <div class="panel-header">SKILLS OVERVIEW</div>
+      <div class="panel-header">Skills Overview</div>
 
       <div class="chart-container">
         <p-chart type="radar" [data]="chartData" [options]="chartOptions" [style]="{ width: '100%', maxWidth: '280px' }" />
