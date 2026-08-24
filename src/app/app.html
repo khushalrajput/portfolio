@@ -12,6 +12,7 @@
 
     <!-- Sidebar -->
     @if (sidebarService.isOpen()) {
+      <div class="sidebar-backdrop" (click)="sidebarService.closePanel()"></div>
       <app-sidebar />
     }
 
@@ -40,4 +41,7 @@
 
   <!-- Status Bar -->
   <app-status-bar />
+
+  <!-- Command Palette Overlay -->
+  <app-command-palette />
 </div>

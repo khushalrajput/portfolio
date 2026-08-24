@@ -41,6 +41,23 @@ import { TabService } from '../../core/services/tab.service';
     .breadcrumb-separator {
       color: var(--vsc-text-muted);
       margin: 0 4px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .breadcrumb {
+        padding: 0 8px;
+      }
+
+      .breadcrumb-item {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+
+      .breadcrumb-separator {
+        margin: 0 2px;
+      }
     }
   `],
 })

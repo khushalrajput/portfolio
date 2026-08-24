@@ -24,14 +24,14 @@
                 "expandedIcon": "folder-open",
                 "children": [
                   {
-                    "label": "about-me.component.ts",
+                    "label": "about-me.scss",
                     "type": "file",
-                    "icon": "typescript",
-                    "fileExtension": "ts",
+                    "icon": "scss",
+                    "fileExtension": "scss",
                     "route": "/about"
                   },
                   {
-                    "label": "projects.component.html",
+                    "label": "projects.html",
                     "type": "file",
                     "icon": "html",
                     "fileExtension": "html",
@@ -50,30 +50,10 @@
                 "label": "app.config.ts",
                 "type": "file",
                 "icon": "typescript",
-                "fileExtension": "ts"
+                "fileExtension": "ts",
+                "route": "/styles"
               }
             ]
-          },
-          {
-            "label": "styles.scss",
-            "type": "file",
-            "icon": "scss",
-            "fileExtension": "scss",
-            "route": "/styles"
-          }
-        ]
-      },
-      {
-        "label": ".github",
-        "type": "folder",
-        "icon": "folder",
-        "expandedIcon": "folder-open",
-        "children": [
-          {
-            "label": "experience.git-timeline",
-            "type": "file",
-            "icon": "git",
-            "fileExtension": "git-timeline"
           }
         ]
       },
@@ -81,7 +61,8 @@
         "label": "angular.json",
         "type": "file",
         "icon": "json",
-        "fileExtension": "json"
+        "fileExtension": "json",
+        "route": "/angular-json"
       },
       {
         "label": "readme.md",
@@ -95,7 +76,7 @@
         "type": "file",
         "icon": "pdf",
         "fileExtension": "pdf",
-        "route": "/resume"
+        "route": "__download__:khushal_resume_angular.pdf"
       }
     ]
   }

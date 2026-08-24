@@ -1,6 +1,6 @@
 import { Injectable, signal, computed } from '@angular/core';
 
-export type SidebarPanel = 'explorer' | 'git' | 'skills' | null;
+export type SidebarPanel = 'explorer' | 'search' | 'git' | 'skills' | null;
 
 @Injectable({ providedIn: 'root' })
 export class SidebarService {

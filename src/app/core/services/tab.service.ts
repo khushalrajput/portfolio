@@ -16,12 +16,12 @@ export class TabService {
     },
     {
       id: 'about',
-      label: 'about-me.component.ts',
-      icon: 'typescript',
+      label: 'about-me.scss',
+      icon: 'scss',
       route: '/about',
-      fileExtension: 'ts',
+      fileExtension: 'scss',
       isModified: true,
-      breadcrumb: ['PORTFOLIO', 'src', 'app', 'portfolio', 'about-me.component.ts'],
+      breadcrumb: ['PORTFOLIO', 'src', 'app', 'portfolio', 'about-me.scss'],
     },
   ]);
 
@@ -46,6 +46,8 @@ export class TabService {
 
   closeTab(tabId: string): void {
     const tabs = this._tabs();
+    if (tabs.length <= 1) return; // keep at least one tab open
+
     const index = tabs.findIndex((t) => t.id === tabId);
     if (index === -1) return;
 
@@ -53,11 +55,9 @@ export class TabService {
 
     if (this._activeTabId() === tabId) {
       const remaining = this._tabs();
-      if (remaining.length > 0) {
-        const newIndex = Math.min(index, remaining.length - 1);
-        this._activeTabId.set(remaining[newIndex].id);
-        this.router.navigate([remaining[newIndex].route]);
-      }
+      const newIndex = Math.min(index, remaining.length - 1);
+      this._activeTabId.set(remaining[newIndex].id);
+      this.router.navigate([remaining[newIndex].route]);
     }
   }
 

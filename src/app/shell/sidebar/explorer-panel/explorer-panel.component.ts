@@ -3,6 +3,7 @@ import { Tree } from 'primeng/tree';
 import { TreeNode } from 'primeng/api';
 import { PortfolioDataService } from '../../../core/services/portfolio-data.service';
 import { TabService } from '../../../core/services/tab.service';
+import { SidebarService } from '../../../core/services/sidebar.service';
 import { FileTreeNode, TabItem } from '../../../core/models/portfolio.models';
 
 @Component({
@@ -64,6 +65,12 @@ import { FileTreeNode, TabItem } from '../../../core/models/portfolio.models';
 
     :host ::ng-deep {
       .p-tree {
+        --p-tree-node-selected-background: rgba(255, 255, 255, 0.12);
+        --p-tree-node-selected-color: #ffffff;
+        --p-content-hover-background: rgba(255, 255, 255, 0.05);
+        --p-highlight-background: rgba(255, 255, 255, 0.12);
+        --p-tree-node-hover-background: rgba(255, 255, 255, 0.05);
+        --p-tree-node-selected-focus-background: rgba(255, 255, 255, 0.15);
         background: transparent !important;
         border: none !important;
         padding: 0 !important;
@@ -82,18 +89,23 @@ import { FileTreeNode, TabItem } from '../../../core/models/portfolio.models';
         border-radius: 0 !important;
 
         &:hover {
-          background: var(--vsc-bg-hover) !important;
+          background: rgba(255, 255, 255, 0.05) !important;
         }
 
         &.p-tree-node-content-selected,
         &.p-highlight {
-          background: var(--vsc-bg-selection) !important;
-          outline: 1px solid rgba(0, 122, 204, 0.5) !important;
-        }
+          background: rgba(255, 255, 255, 0.12) !important;
+          outline: none !important;
+          box-shadow: none !important;
+          border: none !important;
 
-        &.p-tree-node-content-selected .p-tree-node-label,
-        &.p-highlight .p-tree-node-label {
-          color: var(--vsc-text-active) !important;
+          .p-tree-node-label {
+            color: var(--vsc-text-active) !important;
+          }
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+          }
         }
       }
 
@@ -181,6 +193,7 @@ export class ExplorerPanelComponent implements OnInit {
   constructor(
     private readonly dataService: PortfolioDataService,
     private readonly tabService: TabService,
+    private readonly sidebarService: SidebarService,
   ) {}
 
   ngOnInit(): void {
@@ -189,17 +202,30 @@ export class ExplorerPanelComponent implements OnInit {
 
   onNodeSelect(event: { node: TreeNode }): void {
     const node = event.node;
-    if (node.data?.route) {
-      const tab: TabItem = {
-        id: node.data.route.replace('/', ''),
-        label: node.label ?? '',
-        icon: node.data.icon ?? 'file',
-        route: node.data.route,
-        fileExtension: node.data.fileExtension ?? '',
-        isModified: false,
-        breadcrumb: this.buildBreadcrumb(node),
-      };
-      this.tabService.openTab(tab);
+    const route = node.data?.route;
+    if (!route) return;
+
+    if (route.startsWith('__download__:')) {
+      const file = route.replace('__download__:', '');
+      const link = document.createElement('a');
+      link.href = file;
+      link.download = file;
+      link.click();
+      return;
+    }
+
+    const tab: TabItem = {
+      id: route.replace('/', ''),
+      label: node.label ?? '',
+      icon: node.data.icon ?? 'file',
+      route,
+      fileExtension: node.data.fileExtension ?? '',
+      isModified: false,
+      breadcrumb: this.buildBreadcrumb(node),
+    };
+    this.tabService.openTab(tab);
+    if (window.innerWidth <= 768) {
+      this.sidebarService.closePanel();
     }
   }
 

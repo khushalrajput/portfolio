@@ -156,6 +156,23 @@ import { CodeEditorComponent } from '../../shared/components/code-editor.compone
       text-decoration: none;
       &:hover { text-decoration: underline; }
     }
+
+    @media (max-width: 768px) {
+      .preview-pane {
+        padding: 16px 12px;
+        gap: 16px;
+      }
+
+      .project-card {
+        padding: 16px;
+      }
+
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+    }
   `],
 })
 export class ProjectsEditorComponent {

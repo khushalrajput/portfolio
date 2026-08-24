@@ -12,6 +12,7 @@ import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
 import { TerminalPaneComponent } from './shell/terminal-pane/terminal-pane.component';
 import { StatusBarComponent } from './shell/status-bar/status-bar.component';
 import { CopilotChatPanelComponent } from './shell/sidebar/copilot-chat-panel/copilot-chat-panel.component';
+import { CommandPaletteComponent } from './shell/command-palette/command-palette.component';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ import { CopilotChatPanelComponent } from './shell/sidebar/copilot-chat-panel/co
     TerminalPaneComponent,
     StatusBarComponent,
     CopilotChatPanelComponent,
+    CommandPaletteComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

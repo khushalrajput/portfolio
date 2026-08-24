@@ -156,6 +156,18 @@ import { PortfolioDataService } from '../../core/services/portfolio-data.service
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
+
+    @media (max-width: 768px) {
+      .status-center {
+        display: none;
+      }
+
+      .status-right {
+        .status-item:not(.bell):not(.link) {
+          display: none;
+        }
+      }
+    }
   `],
 })
 export class StatusBarComponent {

@@ -132,6 +132,22 @@ import { TabService } from '../../core/services/tab.service';
         background: rgba(255, 255, 255, 0.1);
       }
     }
+
+    @media (max-width: 768px) {
+      .tab {
+        min-width: 80px;
+        max-width: 140px;
+        padding: 0 8px;
+        gap: 4px;
+      }
+
+      .tab-close {
+        opacity: 1;
+        width: 16px;
+        height: 16px;
+        font-size: 14px;
+      }
+    }
   `],
 })
 export class TabBarComponent {

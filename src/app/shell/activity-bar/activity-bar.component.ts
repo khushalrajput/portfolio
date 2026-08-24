@@ -120,6 +120,11 @@ interface ActivityBarItem {
     }
 
     @media (max-width: 768px) {
+      :host {
+        height: auto;
+        width: 100%;
+      }
+
       .activity-bar {
         flex-direction: row;
         width: 100%;
@@ -156,7 +161,7 @@ export class ActivityBarComponent {
       svgPath: 'M17.5 0H8.5L7 1.5V6H2.5L1 7.5V22.5699L2.5 24H14.5699L16 22.5699V18H20.7L22 16.5699V4.5L17.5 0ZM17.5 2.12L19.88 4.5H17.5V2.12ZM14.5 22.5H2.5V7.5H7V16.5699L8.5 18H14.5V22.5ZM20.5 16.5H8.5V1.5H16V6H20.5V16.5Z',
     },
     {
-      panel: null,
+      panel: 'search',
       label: 'Search',
       svgPath: 'M15.25 0a8.25 8.25 0 0 0-6.18 13.72L1 21.75l1.5 1.5 8.03-8.07A8.25 8.25 0 1 0 15.25 0zm0 14.5a6.25 6.25 0 1 1 0-12.5 6.25 6.25 0 0 1 0 12.5z',
     },

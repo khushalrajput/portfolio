@@ -1,56 +1,129 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CodeEditorComponent } from '../../shared/components/code-editor.component';
+import { PortfolioDataService } from '../../core/services/portfolio-data.service';
 
 @Component({
   selector: 'app-about-me-editor',
   imports: [CodeEditorComponent],
-  template: `<app-code-editor [code]="code" language="typescript" />`,
+  template: `<app-code-editor [code]="code" language="scss" />`,
 })
 export class AboutMeEditorComponent {
-  readonly code = `import { Component } from '@angular/core';
+  private data = inject(PortfolioDataService);
 
-// About Me — Khushal Singh Rajput
-// Full Stack Developer | Angular | .NET Core
+  get code(): string {
+    const p = this.data.profile;
+    const skills = this.data.skills.allSkills;
 
-const developer = {
-  name: 'Khushal Singh Rajput',
-  role: 'Software Engineer',
-  company: 'Bacancy',
-  location: 'Ahmedabad, India',
-  email: 'rajputkhushal31@gmail.com',
+    const group = (cat: string) =>
+      skills
+        .filter((s) => s.category === cat)
+        .map((s) => `'${s.name}'`)
+        .join(', ');
 
-  education: {
-    degree: 'B.E., Information Technology',
-    university: 'Vishwakarma Government Engineering College',
-    cgpa: 8.96,
-    graduated: 2024,
-  },
+    const certs = p.certifications.map((c) => `  '${c}',`).join('\n');
 
-  skills: {
-    frontend: ['Angular 16-21', 'TypeScript', 'RxJS', 'Signals', 'PrimeNG', 'TailwindCSS'],
-    backend: ['C#', '.NET 8/9/10', 'ASP.NET Core', 'EF Core', 'SignalR', 'MediatR'],
-    architecture: ['Clean Architecture', 'CQRS', 'REST APIs', 'Microservices', 'RBAC'],
-    databases: ['SQL Server', 'PostgreSQL', 'SQLite'],
-    ai: ['LLamaSharp', 'Azure AI Document Intelligence'],
-    devops: ['SonarQube', 'GitHub Actions', 'Azure'],
-  },
+    const awards = p.recognition
+      .map(
+        (r) =>
+          `  ('${r.title}',${' '.repeat(Math.max(1, 34 - r.title.length))}'${r.period}'),`
+      )
+      .join('\n');
 
-  certifications: [
-    'Azure Fundamentals: AZ-900 Exam Prep',
-  ],
+    const edu = p.education[0];
 
-  recognition: [
-    { award: 'Fast-Track Innovator', quarter: 'Q3 2025' },
-    { award: 'Excellence Award', year: '2024-2025' },
-    { award: 'Extra Mile Award', year: '2024-2025' },
-    { award: 'Marvellous Performance Award', year: '2024-2025' },
-  ],
+    return `// about-me.scss
+// ${p.name} — ${p.role} @ ${p.company}
 
-  links: {
-    github: 'https://github.com/khushalrajput',
-    linkedin: 'https://linkedin.com/in/khushalsinghrajput',
-  },
-};
+// ==========================================
+//  Identity
+// ==========================================
 
-export default developer;`;
+$name:       '${p.name}';
+$role:       '${p.role}';
+$company:    '${p.company}';
+$location:   '${p.location}';
+$email:      '${p.email}';
+
+// ==========================================
+//  Education
+// ==========================================
+
+$degree:     '${edu.degree}';
+$university: '${edu.institution}';
+$cgpa:       ${edu.cgpa};
+$graduated:  ${edu.years.split('–')[1]?.trim() || edu.years};
+
+// ==========================================
+//  Skills
+// ==========================================
+
+$frontend: (
+  ${group('frontend')}
+);
+
+$backend: (
+  ${group('backend')}
+);
+
+$architecture: (
+  ${group('architecture')}
+);
+
+$databases: (${group('database')});
+$ai:        (${group('ai')});
+$devops:    (${group('devops')});
+
+// ==========================================
+//  Certifications
+// ==========================================
+
+$certifications: (
+${certs}
+);
+
+// ==========================================
+//  Recognition & Awards
+// ==========================================
+
+$awards: (
+${awards}
+);
+
+// ==========================================
+//  Links
+// ==========================================
+
+$github:   '${p.links.github}';
+$linkedin: '${p.links.linkedin}';
+
+// ==========================================
+//  Mixin: About Me Card
+// ==========================================
+
+@mixin about-me-card {
+  .developer-card {
+    name:       $name;
+    role:       $role;
+    company:    $company;
+    location:   $location;
+    education:  $degree, $university;
+    cgpa:       $cgpa;
+
+    .skills {
+      frontend:     $frontend;
+      backend:      $backend;
+      architecture: $architecture;
+      databases:    $databases;
+      ai:           $ai;
+      devops:       $devops;
+    }
+
+    .contact {
+      email:    $email;
+      github:   $github;
+      linkedin: $linkedin;
+    }
+  }
+}`;
+  }
 }

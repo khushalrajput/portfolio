@@ -38,6 +38,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'angular-json',
+    loadComponent: () =>
+      import('./editors/angular-json-editor/angular-json-editor.component').then(
+        (m) => m.AngularJsonEditorComponent
+      ),
+  },
+  {
     path: 'resume',
     loadComponent: () =>
       import('./editors/resume-editor/resume-editor.component').then(

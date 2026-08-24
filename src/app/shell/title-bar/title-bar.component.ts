@@ -1,32 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { Location } from '@angular/common';
+import { SidebarService } from '../../core/services/sidebar.service';
+import { LayoutService } from '../../core/services/layout.service';
 
 @Component({
   selector: 'app-title-bar',
   template: `
     <div class="title-bar">
       <div class="title-bar-left">
-        <svg class="vscode-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M15.5 0.5L6.5 15.5L0.5 10.5L4.5 8.5L2.5 5.5L8.5 3.5L7.5 0.5L15.5 0.5Z" fill="#007ACC"/>
-        </svg>
+        <img class="vscode-icon" src="logo.webp" alt="Logo" width="16" height="16" />
         <div class="nav-arrows">
-          <button class="nav-btn" aria-label="Go Back">
+          <button class="nav-btn" aria-label="Go Back" title="Go Back" (click)="goBack()">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.5 1L1 8l6.5 7 .7-.7L2.4 8.5H15v-1H2.4l5.8-5.8-.7-.7z"/></svg>
           </button>
-          <button class="nav-btn" aria-label="Go Forward">
+          <button class="nav-btn" aria-label="Go Forward" title="Go Forward" (click)="goForward()">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8.5 1l6.5 7-6.5 7-.7-.7 5.8-5.8H1v-1h12.6L7.8 1.7l.7-.7z"/></svg>
           </button>
         </div>
       </div>
       <div class="title-bar-center">
-        <div class="command-palette-box">
-          portfolio
-        </div>
+        <button class="command-palette-box" (click)="layoutService.openCommandPalette()">
+          portfolio — search commands (Ctrl+Shift+P)
+        </button>
       </div>
       <div class="title-bar-right">
-        <button class="layout-btn" aria-label="Toggle Panel">
+        <button class="layout-btn" aria-label="Toggle Terminal" title="Toggle Terminal (Ctrl+\`)" (click)="layoutService.toggleTerminal()">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1h12l1 1v12l-1 1H2l-1-1V2l1-1zm0 1v12h12V2H2zm1 8h10v3H3v-3z"/></svg>
         </button>
-        <button class="layout-btn" aria-label="Toggle Sidebar">
+        <button class="layout-btn" aria-label="Toggle Sidebar" title="Toggle Sidebar (Ctrl+B)" (click)="toggleSidebar()">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1h12l1 1v12l-1 1H2l-1-1V2l1-1zm0 1v12h12V2H2zm1 1h4v10H3V3z"/></svg>
         </button>
       </div>
@@ -72,11 +73,10 @@ import { Component } from '@angular/core';
       color: var(--vsc-text-muted);
       cursor: pointer;
       border-radius: 4px;
-      opacity: 0.5;
 
       &:hover {
         background: rgba(255, 255, 255, 0.08);
-        opacity: 0.8;
+        color: var(--vsc-text-primary);
       }
     }
 
@@ -100,6 +100,7 @@ import { Component } from '@angular/core';
       font-size: 11px;
       color: var(--vsc-text-muted);
       cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
       &:hover {
         background: rgba(255, 255, 255, 0.08);
@@ -128,6 +129,60 @@ import { Component } from '@angular/core';
         background: rgba(255, 255, 255, 0.08);
       }
     }
+
+    @media (max-width: 768px) {
+      .nav-arrows {
+        display: none;
+      }
+
+      .command-palette-box {
+        min-width: unset;
+        padding: 0 12px;
+        font-size: 10px;
+      }
+
+      .title-bar-right {
+        display: none;
+      }
+    }
   `],
 })
-export class TitleBarComponent {}
+export class TitleBarComponent {
+  constructor(
+    private readonly location: Location,
+    private readonly sidebarService: SidebarService,
+    protected readonly layoutService: LayoutService,
+  ) {}
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  goForward(): void {
+    this.location.forward();
+  }
+
+  toggleSidebar(): void {
+    if (this.sidebarService.isOpen()) {
+      this.sidebarService.closePanel();
+    } else {
+      this.sidebarService.togglePanel('explorer');
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent): void {
+    if (event.ctrlKey && event.shiftKey && event.key === 'P') {
+      event.preventDefault();
+      this.layoutService.toggleCommandPalette();
+    }
+    if (event.ctrlKey && event.key === 'b') {
+      event.preventDefault();
+      this.toggleSidebar();
+    }
+    if (event.ctrlKey && event.key === '`') {
+      event.preventDefault();
+      this.layoutService.toggleTerminal();
+    }
+  }
+}

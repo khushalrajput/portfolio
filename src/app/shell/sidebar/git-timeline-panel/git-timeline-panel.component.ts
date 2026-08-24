@@ -86,11 +86,20 @@ import { ExperienceCommit, ExperienceEntry } from '../../../core/models/portfoli
     </div>
   `,
   styles: [`
+    :host {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
     .git-panel {
       display: flex;
       flex-direction: column;
       height: 100%;
-      overflow: auto;
+      min-height: 0;
+      overflow: hidden;
     }
 
     .panel-header {
@@ -128,6 +137,9 @@ import { ExperienceCommit, ExperienceEntry } from '../../../core/models/portfoli
 
     .timeline {
       padding: 0 12px;
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
     }
 
     .timeline-entry {

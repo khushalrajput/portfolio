@@ -1,105 +1,74 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CodeEditorComponent } from '../../shared/components/code-editor.component';
+import { PortfolioDataService } from '../../core/services/portfolio-data.service';
 
 @Component({
   selector: 'app-styles-editor',
   imports: [CodeEditorComponent],
-  template: `<app-code-editor [code]="code" language="scss" />`,
+  template: `<app-code-editor [code]="code" language="typescript" />`,
 })
 export class StylesEditorComponent {
-  readonly code = `// src/styles.scss
-// Portfolio Global Styles — VS Code Dark+ Theme
-// Technologies: PrimeNG + TailwindCSS
+  private data = inject(PortfolioDataService);
 
-@import "tailwindcss";
+  get code(): string {
+    const name = this.data.profile.name;
 
-// ==========================================
-// PrimeNG Component Overrides
-// ==========================================
+    return `// app.config.ts — Developer Workspace Configuration
+import { WorkspaceConfig } from '@khushal/portfolio';
 
-.p-button {
-  background: var(--vsc-bg-statusbar);
-  border: none;
-  border-radius: 4px;
-  font-family: 'Cascadia Code', monospace;
-  font-size: 12px;
-  padding: 6px 14px;
-  transition: opacity 0.2s ease;
+export const appConfig: WorkspaceConfig = {
+  developer: '${name}',
 
-  &:hover {
-    opacity: 0.9;
-    background: var(--vsc-bg-statusbar);
+  workspace: {
+    editor: 'VS Code',
+    theme: 'Dark+ (default)',
+    font: 'Cascadia Code',
+    fontSize: 14,
+    tabSize: 2,
+    formatOnSave: true,
+    bracketPairColorization: true,
+  },
+
+  extensions: [
+    'Angular Language Service',
+    'Prettier',
+    'ESLint',
+    'GitLens',
+    'C# Dev Kit',
+    'Thunder Client',
+    'Tailwind CSS IntelliSense',
+    'Error Lens',
+    'Material Icon Theme',
+    'GitHub Copilot',
+  ],
+
+  dailyTools: {
+    versionControl: 'Git + GitHub',
+    apiTesting: 'Thunder Client / Postman',
+    database: 'SSMS / Azure Data Studio',
+    terminal: 'Windows Terminal + Git Bash',
+    browser: 'Chrome DevTools',
+    ciCd: 'GitHub Actions',
+    codeQuality: 'SonarQube',
+  },
+
+  workflow: {
+    methodology: 'Agile / Scrum',
+    branchStrategy: 'GitFlow',
+    codeReview: true,
+    pairProgramming: true,
+    standups: 'Daily @ 10:00 AM IST',
+  },
+
+  interests: [
+    'Clean Architecture patterns',
+    'AI-powered developer tools',
+    'Open source contribution',
+    'Performance optimization',
+    'Building side projects',
+  ],
+};
+
+export default appConfig;`;
   }
-}
-
-.p-inputtext {
-  background: var(--vsc-bg-input);
-  border: 1px solid var(--vsc-border);
-  color: var(--vsc-text-primary);
-  font-family: 'Cascadia Code', monospace;
-  font-size: 13px;
-
-  &:focus {
-    border-color: var(--vsc-bg-statusbar);
-    box-shadow: none;
-  }
-}
-
-.p-tree {
-  background: transparent;
-  border: none;
-  color: var(--vsc-text-primary);
-  font-family: 'Cascadia Code', monospace;
-}
-
-// ==========================================
-// Tailwind @apply Utilities
-// ==========================================
-
-.my-custom-button {
-  @apply bg-blue-600 text-white font-bold p-4 rounded;
-}
-
-.vscode-panel {
-  @apply bg-vsc-sidebar border border-vsc-border rounded;
-}
-
-.editor-tab-active {
-  @apply bg-vsc-tab-active text-vsc-text-active border-t border-t-blue-500;
-}
-
-.status-bar-item {
-  @apply flex items-center gap-1 px-2 h-full text-white text-xs whitespace-nowrap;
-}
-
-.syntax-keyword {
-  @apply text-vsc-accent-blue;
-}
-
-.syntax-string {
-  @apply text-vsc-accent-orange;
-}
-
-.syntax-comment {
-  @apply text-vsc-accent-green italic;
-}
-
-// ==========================================
-// Animation Keyframes
-// ==========================================
-
-@keyframes terminal-typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-@keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}`;
 }

@@ -422,6 +422,23 @@ import { SidebarService } from '../../../core/services/sidebar.service';
       color: var(--vsc-text-muted);
       opacity: 0.7;
     }
+
+    @media (max-width: 768px) {
+      .copilot-panel {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .suggestions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .input-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+      }
+    }
   `],
 })
 export class CopilotChatPanelComponent {

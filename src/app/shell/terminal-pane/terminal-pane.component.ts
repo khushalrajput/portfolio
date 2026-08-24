@@ -1,10 +1,11 @@
-import { Component, signal, OnInit, OnDestroy, ElementRef, viewChild } from '@angular/core';
+import { Component, signal, effect, OnInit, OnDestroy, ElementRef, viewChild } from '@angular/core';
+import { LayoutService } from '../../core/services/layout.service';
 
 @Component({
   selector: 'app-terminal-pane',
   template: `
-    <div class="terminal-pane" [class.collapsed]="isCollapsed()">
-      <div class="terminal-header" (click)="toggleCollapse()">
+    <div class="terminal-pane" [class.collapsed]="layoutService.terminalCollapsed()">
+      <div class="terminal-header" (click)="layoutService.toggleTerminal()">
         <div class="terminal-tabs">
           <span class="terminal-tab active">TERMINAL</span>
           <span class="terminal-tab">PROBLEMS</span>
@@ -12,12 +13,12 @@ import { Component, signal, OnInit, OnDestroy, ElementRef, viewChild } from '@an
           <span class="terminal-tab">DEBUG CONSOLE</span>
         </div>
         <div class="terminal-actions">
-          <button class="terminal-action" (click)="toggleCollapse(); $event.stopPropagation()">
-            {{ isCollapsed() ? '▲' : '▼' }}
+          <button class="terminal-action" (click)="layoutService.toggleTerminal(); $event.stopPropagation()">
+            {{ layoutService.terminalCollapsed() ? '▲' : '▼' }}
           </button>
         </div>
       </div>
-      @if (!isCollapsed()) {
+      @if (!layoutService.terminalCollapsed()) {
         <div class="terminal-body" #terminalBody>
           <pre class="terminal-output">{{ displayedText() }}<span class="cursor" [class.blink]="typingDone()">█</span></pre>
         </div>
@@ -111,15 +112,31 @@ import { Component, signal, OnInit, OnDestroy, ElementRef, viewChild } from '@an
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
+
+    @media (max-width: 768px) {
+      .terminal-pane:not(.collapsed) {
+        height: 140px;
+      }
+
+      .terminal-tab {
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+
+      .terminal-output {
+        font-size: 11px;
+      }
+    }
   `],
 })
 export class TerminalPaneComponent implements OnInit, OnDestroy {
-  readonly isCollapsed = signal(false);
   readonly displayedText = signal('');
   readonly typingDone = signal(false);
 
   private readonly terminalBody = viewChild<ElementRef>('terminalBody');
   private timerId: ReturnType<typeof setTimeout> | null = null;
+
+  constructor(protected readonly layoutService: LayoutService) {}
 
   private readonly fullText = `khushal@portfolio:~$ ng serve --configuration production
 ⠋ Building portfolio...
@@ -144,10 +161,6 @@ khushal@portfolio:~$ `;
 
   ngOnDestroy(): void {
     if (this.timerId) clearTimeout(this.timerId);
-  }
-
-  toggleCollapse(): void {
-    this.isCollapsed.update((v) => !v);
   }
 
   private typeText(): void {

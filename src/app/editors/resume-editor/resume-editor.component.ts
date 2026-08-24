@@ -166,6 +166,21 @@ import { PortfolioDataService } from '../../core/services/portfolio-data.service
       color: var(--vsc-text-muted);
       margin-top: 2px;
     }
+
+    @media (max-width: 768px) {
+      .resume-editor {
+        padding: 16px;
+      }
+
+      .resume-header h2 {
+        font-size: 18px;
+      }
+
+      .exp-header {
+        flex-direction: column;
+        gap: 2px;
+      }
+    }
   `],
 })
 export class ResumeEditorComponent {
